@@ -1,17 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Question Editor</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --primary-color: #4a9eff;
+            --secondary-color: #2d2d2d;
+            --accent-color: #00c853;
+            --error-color: #ff5252;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background-color: var(--secondary-color);
+            border: 1px solid #404040;
+            color: var(--text-color);
+            border-radius: 4px;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
+        .output-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+        }
+
+        .feature-section {
+            margin: 40px 0;
+            padding: 20px;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            padding: 20px;
+            background-color: #333;
+            border-radius: 6px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Enter Question and Solution</h2>
-    <textarea id="question" placeholder="Enter question here" rows="3" cols="60"></textarea><br><br>
-    <textarea id="solution" placeholder="Enter solution here" rows="3" cols="60"></textarea><br><br>
-    <button onclick="sendData()">Submit</button>
+    <div class="container">
+        <h1>Question Paper Editor</h1>
+        
+        <div class="feature-section">
+            <h2>Input Section</h2>
+            <textarea id="question" placeholder="Enter question here" rows="3"></textarea>
+            <textarea id="solution" placeholder="Enter solution here" rows="3"></textarea>
+            <button onclick="sendData()">Process Text</button>
+        </div>
 
-    <h3>Edited Output:</h3>
-    <p><strong>Edited Question:</strong> <span id="editedQuestion"></span></p>
-    <p><strong>Edited Solution:</strong> <span id="editedSolution"></span></p>
+        <div class="output-section">
+            <h2>Edited Output</h2>
+            <p><strong>Edited Question:</strong> <span id="editedQuestion"></span></p>
+            <p><strong>Edited Solution:</strong> <span id="editedSolution"></span></p>
+        </div>
+
+        <div class="feature-section">
+            <h2>Current Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Text Processing</h3>
+                    <p>Intelligent text processing for questions and solutions</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Real-time Editing</h3>
+                    <p>Instant display of processed text without page reload</p>
+                </div>
+                <div class="feature-card">
+                    <h3>API Integration</h3>
+                    <p>Seamless connection with backend processing service</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-section">
+            <h2>Future Improvements</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Rich Text Editor</h3>
+                    <p>Advanced formatting options for questions and solutions</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Template System</h3>
+                    <p>Predefined templates for different question types</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Export Options</h3>
+                    <p>Export to various formats (PDF, Word, etc.)</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         async function sendData() {
@@ -31,4 +159,3 @@
     </script>
 </body>
 </html>
-

@@ -5,7 +5,7 @@ import requests
 app = Flask(__name__)
 CORS(app)
 
-OPENROUTER_API_KEY = "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"  # Replace with your real key
+OPENROUTER_API_KEY = "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"  # Replace with your real key
 
 def ask_llm(question, solution):
     prompt = f"""Given the following question and its solution, slightly modify the numeric values in the question (±10%) and regenerate the correct solution accordingly.
