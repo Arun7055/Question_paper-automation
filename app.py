@@ -1,12 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from flask import render_template
 import requests
 
 app = Flask(__name__)
 CORS(app)
 
-OPENROUTER_API_KEY = "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"  # Replace with your real key
+OPENROUTER_API_KEY = "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"  # Replace with your real key
 
 def ask_llm(question, solution):
     prompt = f"""Given the following question and its solution, slightly modify the numeric values in the question (±10%) and regenerate the correct solution accordingly.
@@ -27,16 +26,22 @@ Solution: {solution}
         "Content-Type": "application/json"
     }
 
+    print("\n=== Sending request to OpenRouter ===")
+    print("Payload:", payload)
+    print("Headers:", headers)
+
     response = requests.post("https://openrouter.ai/api/v1/chat/completions", json=payload, headers=headers)
+    print("Response status code:", response.status_code)
 
     try:
         result = response.json()
+        print("Parsed JSON response:", result)
     except Exception:
-        print("Failed to parse JSON. Raw text:", response.text)
+        print("❌ Failed to parse JSON. Raw response text:\n", response.text)
         raise
 
     if "choices" not in result:
-        print("API returned:", result)  # Add this
+        print("❌ API returned unexpected format:", result)
         raise Exception("LLM API failed: 'choices' missing")
 
     reply = result["choices"][0]["message"]["content"]
@@ -49,14 +54,12 @@ def edit_text():
     question = data.get('question', '')
     solution = data.get('solution', '')
 
-    edited_q, edited_s = ask_llm(question, solution)
-
-    return jsonify({'edited_question': edited_q, 'edited_solution': edited_s})
-
-# @app.route('/')
-# def home():
-#     return "Flask backend is running!"
-
+    try:
+        edited_q, edited_s = ask_llm(question, solution)
+        return jsonify({'edited_question': edited_q, 'edited_solution': edited_s})
+    except Exception as e:
+        print("❌ Error in edit_text:", str(e))
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/')
 def home():
